@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ycj.good.mapper.GoodsMapper">
+    <select id="getGoodsTotal" resultType="int">
+        select count(*) from goods;
+    </select>
+
+    <select id="queryGoodsList" resultMap="GoodsList">
+        select * from goods limit #{page}, #{limit};
+    </select>
+
+    <select id="queryGoodsById" resultType="Goods">
+        select * from goods where id = #{id};
+    </select>
+
+    <resultMap id="GoodsList" type="Goods">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+    </resultMap>
+</mapper>

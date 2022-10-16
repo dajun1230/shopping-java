@@ -3,8 +3,24 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ycj.user.mapper.UserMapper">
+    <select id="getUserTotal" resultType="int">
+        select count(*) from user;
+    </select>
+    <select id="queryUserList" resultMap="UserList">
+        select id, username, status, email, phone_number, sex, avatar,
+               user_type, create_user, create_time, update_user, update_time
+        from user
+        <if test="username != null and username != ''">
+            and username=#{username}
+        </if>
+        <if test="phoneNumber != null and phoneNumber!= ''">
+            and phoneNumber=#{phoneNumber}
+        </if>
+        limit #{page}, #{limit};
+    </select>
     <select id="queryUserById" resultType="User">
-        select id, username, status, email, phone_number, sex, avatar, user_type, create_user, create_time, update_user, update_time from user where id=${id};
+        select id, username, status, email, phone_number, sex, avatar,
+               user_type, create_user, create_time, update_user, update_time from user where id=#{id};
     </select>
     <insert id="createUser" parameterType="User">
         insert into user(id, username, password, status, email, phone_number, sex, avatar, user_type, create_user, create_time, update_user, update_time)
@@ -16,6 +32,10 @@
         where id=#{id};
     </update>
     <delete id="deleteUserById">
-        delete from user where id=${id};
+        delete from user where id=#{id};
     </delete>
+
+    <resultMap id="UserList" type="user">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+    </resultMap>
 </mapper>

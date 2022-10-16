@@ -37,7 +37,27 @@ docker run -d --name shopping-data \
 mysql:5.7
 ```
 
-docker run -d --name shopping-data \
--p 3306:3306 \
--e MYSQL_ROOT_PASSWORD=123456 \
-mysql:5.7
+# java部署
+linux部署路径：/project/java
+## 部署服务
+```bash
+# 将打包后的 target/app.jar 上传到服务器
+# 运行启动命令
+nohup java -jar app.jar &
+```
+
+## 停止已部署服务
+```bash
+# 找出 Java 服务的进程 ID，可以使用 JDK 自带的jps命令或者 Linux 平台的ps(process status) 命令
+jps
+# 或者
+ps -ef|grep java
+
+# 停止服务
+kill -9 <进程id>
+```
+
+## nacos 访问地址
+```text
+http://47.108.167.244:8848/nacos/index.html
+```
